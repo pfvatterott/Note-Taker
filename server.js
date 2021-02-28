@@ -16,11 +16,11 @@ console.log(fullUrl);
 app.use(logger)
 
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
-app.get("/notes", function(req, res) {
+app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
@@ -57,9 +57,7 @@ app.delete('/api/notes/:id', (req, res) => {
         };
         let notes = JSON.parse(data);
         const index = notes.findIndex(r => r.id === req.params.id)
-        console.log(index);
         notes.splice(index, 1);
-        console.log(notes)
         fs.writeFile("./db/db.json", JSON.stringify(notes), function (err) {
             if (err) throw (err)
         });
