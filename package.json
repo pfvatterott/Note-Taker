@@ -1,0 +1,23 @@
+{
+  "name": "note-taker",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "unique-identifier": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfvatterott/Note-Taker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pfvatterott/Note-Taker/issues"
+  },
+  "homepage": "https://github.com/pfvatterott/Note-Taker#readme",
+  "description": ""
+}
