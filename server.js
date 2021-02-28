@@ -8,13 +8,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-const logger = (req, res, next) => {
-    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-console.log(fullUrl);
-    next();
-}
-app.use(logger)
-
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
@@ -64,12 +57,6 @@ app.delete('/api/notes/:id', (req, res) => {
         res.sendFile(path.join(__dirname, "/public/notes.html"));
     })
 })
-
-
-
-
-
-
 
 
 // ===============================================
