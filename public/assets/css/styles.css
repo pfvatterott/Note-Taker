@@ -68,3 +68,7 @@ html, body {
   padding: 20px;
   cursor: pointer;
 }
+
+.fa-edit {
+  padding-right: 5px;
+}

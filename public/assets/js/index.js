@@ -138,6 +138,7 @@ const renderNoteList = async (notes) => {
 
     if (delBtn) {
       const delBtnEl = document.createElement('i');
+      const editBtnEl = document.createElement('i');
       delBtnEl.classList.add(
         'fas',
         'fa-trash-alt',
@@ -145,9 +146,17 @@ const renderNoteList = async (notes) => {
         'text-danger',
         'delete-note'
       );
+      editBtnEl.classList.add(
+        'far',
+        'fa-edit',
+        'float-right',
+        'text-success'
+      );
       delBtnEl.addEventListener('click', handleNoteDelete);
+      editBtnEl.addEventListener('click', handleNoteEdit);
 
       liEl.append(delBtnEl);
+      liEl.append(editBtnEl);
     }
 
     return liEl;
