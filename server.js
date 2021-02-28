@@ -8,6 +8,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
+const logger = (req, res, next) => {
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+console.log(fullUrl);
+    next();
+}
+app.use(logger)
+
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"));
@@ -40,6 +47,23 @@ app.post('/api/notes', (req, res) => {
         });
         // This reloads the page when you click save
         res.redirect("/notes")
+    })
+})
+
+app.delete('/api/notes/:id', (req, res) => {
+    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function(err, data) {
+        if (err) {
+            console.log(err)
+        };
+        let notes = JSON.parse(data);
+        const index = notes.findIndex(r => r.id === req.params.id)
+        console.log(index);
+        notes.splice(index, 1);
+        console.log(notes)
+        fs.writeFile("./db/db.json", JSON.stringify(notes), function (err) {
+            if (err) throw (err)
+        });
+        res.sendFile(path.join(__dirname, "/public/notes.html"));
     })
 })
 
