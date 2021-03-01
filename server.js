@@ -31,10 +31,7 @@ app.post('/api/notes', (req, res) => {
         // creates a unique ID using https://www.npmjs.com/package/unique-identifier
         const uniqueVal = generateUUId();
         newNote.id = uniqueVal;
-        
-        console.log(newNote)
         notes.push(newNote);
-        console.log(notes)
         fs.writeFile("./db/db.json", JSON.stringify(notes), function (err) {
             if (err) throw (err)
         });
@@ -56,8 +53,23 @@ app.delete('/api/notes/:id', (req, res) => {
         });
         res.sendFile(path.join(__dirname, "/public/notes.html"));
     })
-})
+});
 
+app.post('/api/notes/:index', (req, res) => {
+    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function(err, data) {
+        if (err) {
+            console.log(err)
+        };
+        let notes = JSON.parse(data);
+        let newNotes = (req.body)
+        console.log(newNotes);
+        const index = notes.findIndex(r => r.id === req.params.id)
+        fs.writeFile("./db/db.json", JSON.stringify(newNotes), function (err) {
+            if (err) throw (err)
+        });
+        res.redirect("/notes");
+    })
+});
 
 // ===============================================
 app.listen(PORT, () => {

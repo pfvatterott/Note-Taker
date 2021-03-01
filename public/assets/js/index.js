@@ -3,6 +3,7 @@ let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
+let saveEditBtn;
 
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
@@ -10,7 +11,9 @@ if (window.location.pathname === '/notes') {
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
+  saveEditBtn = document.querySelector('.save-edit');
 }
+
 
 // Show an element
 const show = (elem) => {
@@ -21,6 +24,8 @@ const show = (elem) => {
 const hide = (elem) => {
   elem.style.display = 'none';
 };
+
+let isSaveEditButton = false;
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
@@ -50,8 +55,19 @@ const deleteNote = (id) =>
     },
   });
 
+const saveEdit = (index, note) =>
+  fetch (`/api/notes/${index}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(note),
+  })
+
 const renderActiveNote = () => {
   hide(saveNoteBtn);
+  hide(saveEditBtn);
+  isSaveEditButton = false;
 
   if (activeNote.id) {
     noteTitle.setAttribute('readonly', true);
@@ -95,6 +111,15 @@ const handleNoteDelete = (e) => {
   });
 };
 
+const handleNoteEdit = (e) => {
+  handleNoteView(e);
+  noteTitle.removeAttribute('readonly');
+  noteText.removeAttribute('readonly');
+  show(saveEditBtn);
+  isSaveEditButton = true;
+  hide(saveNoteBtn);
+}
+
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
   e.preventDefault();
@@ -111,10 +136,27 @@ const handleNewNoteView = (e) => {
 const handleRenderSaveBtn = () => {
   if (!noteTitle.value.trim() || !noteText.value.trim()) {
     hide(saveNoteBtn);
-  } else {
-    show(saveNoteBtn);
+    hide(saveEditBtn);
+    isSaveEditButton = false;
+  } else if (isSaveEditButton === true) {
+    hide(saveNoteBtn);
   }
+  else {
+    show(saveNoteBtn);
+  };
 };
+
+const handleEditSave = async (notes) => {
+  let jsonNotes = await notes.json();
+  const index = jsonNotes.findIndex(r => r.id === activeNote.id)
+  jsonNotes[index].title = noteTitle.value;
+  jsonNotes[index].text = noteText.value;
+  saveEdit(jsonNotes[index], jsonNotes).then(() => {
+    getAndRenderNotes();
+    renderActiveNote();
+  });
+
+}
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
@@ -180,10 +222,12 @@ const renderNoteList = async (notes) => {
 
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
+const getAndEditNotes = () => getNotes().then(handleEditSave);
 
 if (window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
   newNoteBtn.addEventListener('click', handleNewNoteView);
+  saveEditBtn.addEventListener('click', getAndEditNotes);
   noteTitle.addEventListener('keyup', handleRenderSaveBtn);
   noteText.addEventListener('keyup', handleRenderSaveBtn);
 }
