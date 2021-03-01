@@ -40,7 +40,7 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
-app.delete('/api/notes/:id', (req, res) => {
+app.delete('/api/notes/:note', (req, res) => {
     fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function(err, data) {
         if (err) {
             console.log(err)

@@ -55,8 +55,8 @@ const deleteNote = (id) =>
     },
   });
 
-const saveEdit = (index, note) =>
-  fetch (`/api/notes/${index}`, {
+const saveEdit = (note) =>
+  fetch (`/api/notes/:note`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ const handleEditSave = async (notes) => {
   const index = jsonNotes.findIndex(r => r.id === activeNote.id)
   jsonNotes[index].title = noteTitle.value;
   jsonNotes[index].text = noteText.value;
-  saveEdit(jsonNotes[index], jsonNotes).then(() => {
+  saveEdit(jsonNotes).then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
