@@ -69,6 +69,7 @@ app.post('/api/notes/:index', (req, res) => {
     res.redirect("/notes");
 });
 
+// Wildcard backup
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
 });
