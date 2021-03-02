@@ -152,7 +152,8 @@ const handleEditSave = async (notes) => {
   jsonNotes[index].text = noteText.value;
   saveEdit(jsonNotes).then(() => {
     getAndRenderNotes();
-    renderActiveNote();
+    noteTitle.setAttribute('readonly', true);
+    noteText.setAttribute('readonly', true);
   });
 
 }
