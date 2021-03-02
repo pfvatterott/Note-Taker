@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require("path");
 const fs = require("fs");
-const  generateUUId = require('unique-identifier');
+const generateUUId = require('unique-identifier');
 const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +26,7 @@ app.get('/api/notes', (req, res) => {
 
 // Save a Note
 app.post('/api/notes', (req, res) => {
-    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function(err, data) {
+    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function (err, data) {
         if (err) {
             console.log(err)
         };
@@ -46,7 +46,7 @@ app.post('/api/notes', (req, res) => {
 
 // Delete Notes
 app.delete('/api/notes/:note', (req, res) => {
-    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function(err, data) {
+    fs.readFile(path.join(__dirname, "/db/db.json"), "utf8", function (err, data) {
         if (err) {
             console.log(err)
         };
@@ -67,10 +67,9 @@ app.post('/api/notes/:index', (req, res) => {
         if (err) throw (err)
     });
     res.redirect("/notes");
-
 });
 
 // ===============================================
 app.listen(PORT, () => {
     console.log(`App listening on PORT: ${PORT}`);
-  });
+});

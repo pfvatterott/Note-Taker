@@ -4,6 +4,7 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 let saveEditBtn;
+let isSaveEditButton = false;
 
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
@@ -14,7 +15,6 @@ if (window.location.pathname === '/notes') {
   saveEditBtn = document.querySelector('.save-edit');
 }
 
-
 // Show an element
 const show = (elem) => {
   elem.style.display = 'inline';
@@ -24,8 +24,6 @@ const show = (elem) => {
 const hide = (elem) => {
   elem.style.display = 'none';
 };
-
-let isSaveEditButton = false;
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
@@ -56,7 +54,7 @@ const deleteNote = (id) =>
   });
 
 const saveEdit = (note) =>
-  fetch (`/api/notes/:note`, {
+  fetch(`/api/notes/:note`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -145,6 +143,7 @@ const handleRenderSaveBtn = () => {
     show(saveNoteBtn);
   };
 };
+
 
 const handleEditSave = async (notes) => {
   let jsonNotes = await notes.json();
