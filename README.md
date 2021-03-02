@@ -6,14 +6,15 @@
   ![badge](https://img.shields.io/badge/license-MIT-green)
 
   ## Description
+  Create multiple notes and save them server side! The user can create notes, save them, delete them, and edit them.
 
+  This program uses several NPM packages including [Unique-Identifier](https://www.npmjs.com/package/unique-identifier) to create unique IDs and [express](https://expressjs.com/) to handle all web frameworks.
 
   # Table of Contents
   1. [Installation](#Installation)
   2. [Usage](#Usage)
   3. [License](#License)
   4. [Contributing](#Contributing)
-  5. [Tests](#Tests)
   6. [Questions](#Questions)
 
   ## Installation
@@ -29,9 +30,6 @@
 
   ## Contributing
   Please feel free to contribute! Reach out to me through my email or Github listed below
-
-  ## Tests
-  
 
   ## Questions
 

@@ -32,7 +32,7 @@ app.post('/api/notes', (req, res) => {
         };
         let notes = JSON.parse(data);
         let newNote = (req.body);
-        // creates a unique ID using https://www.npmjs.com/package/unique-identifier
+        // creates a unique ID
         const uniqueVal = generateUUId();
         newNote.id = uniqueVal;
         notes.push(newNote);
